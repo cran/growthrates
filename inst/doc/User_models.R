@@ -69,7 +69,7 @@ summary(fit)
 #  ## from inline code, by using the 'cOde' package of Daniel Kaschek
 #  ## Note: This example needs the R development tools.
 #  ##  - suitable compilers on Linux and Mac
-#  ##  - Rtools on Windows from
+#  ##  - Rtools on Windows from https://cran.r-project.org/bin/windows/Rtools/
 #  
 #  library("growthrates")
 #  library("cOde")

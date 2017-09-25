@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>1. Introduction</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<!--
+possible output options are:
+rmarkdown::pdf_document
+rmarkdown::html_vignette
+
+set to UTF if necessary with:
+%\VignetteEncoding{UTF-8}
+
+Bibliographies may need to set the LANG environment variable
+LANG=en_US.UTF-8
+-->
+
+<h1>1. Introduction</h1>
+
+<p>Package <strong>growthrates</strong> comes with a set of pararametric growth models
+built-in, that should be sufficient for many application scenarios,
+but of course not under all circumstances. This document describes how
+the set of available functions can be extended with own user-defined
+models. Section (3) describes how simple regression functions existing
+in a <em>closed form</em> can be implemented.  In Section (4) we will see how
+growth models defined by systems of ordinary differential equations
+(ODE) can be implemented directy in R and finally Section (5)
+describes how ODE models can be implemented as C inline functions.</p>
+
+<h1>2. Differential equations or closed form?</h1>
+
+<p>Growth models can be either &ldquo;ordinary functions&#39;&#39; of time
+\(f(t)\) in <em>closed form</em>, that a allow to get values for the dependend
+variable \(y\) immediately from any given value of an independent
+variable \(t\) (or \(time\)) without the need of iteration. Or, they can
+be a differential equation model \(dy/dt\) that needs numerical
+integration.</p>
+
+<p>Sometimes, a model can be given in either of these forms. As an
+example, the logistic growth model can be written as a differential
+equation:</p>
+
+<p>\[\frac{dy}{dt} = \mu_{max} \cdot y \left(1 - \frac{y}{K}\right)\]</p>
+
+<p>or as its analytical solution in closed form:</p>
+
+<p>\[y(t) = \frac{K \cdot y_0}{y_0 + (K - y_0) \cdot e^{-\mu_{max} \cdot t}}\]</p>
+
+<p>We see, that it is much easier to use the second form, because \(y\) can
+immediately be calculated from \(t\), while for the first version, we
+would need either calculus (and get the second form as its solution),
+or we could use a numerical method to simulate the evolution of \(y\)
+stepwise over time.</p>
+
+<p>But on the other hand, models given as differential equations are often more 
+directly related to a mechanistic process description and easier to extended. </p>
+
+<h1>3. Growth models in closed form</h1>
+
+<p>Let&#39;s assume we want to extend the logistic growth model with an
+additional shift parameter in \(y\) direction, for example, because a
+part of the population does not participate growing. This leads to an
+equation like:</p>
+
+<p>\[y(t) = \frac{K \cdot y_0}{y_0 + (K - y_0) \cdot e^{-\mu_{max} t}} + y_{shift}\]</p>
+
+<p>After loading package growthrates:</p>
+
+<pre><code class="r">library(&quot;growthrates&quot;)
+</code></pre>
+
+<p>we can immediately define our own function in the user workspace,
+without modifying the package itself. In order to make it compatible
+with package growthrates, it is sufficient to streamline the input and
+output interfaces in the style described in help page <code>?growthmodel</code>.</p>
+
+<p>The function can have any valid name, but:</p>
+
+<ol>
+<li>it must have exactly two arguments <strong>time</strong> and <strong>parms</strong> as input
+and</li>
+<li>its return value (output) must be a matrix with at least 3 columns
+with the column names <code>time</code>, <code>y</code> and <code>log_y</code>.</li>
+</ol>
+
+<p>The inner part of the function can be adapted as necessary, as long as
+the connection between input and output makes sense from a scientific
+viewpoint.</p>
+
+<pre><code class="r">grow_logistic_yshift &lt;- function(time, parms) {
+  with(as.list(parms), {
+    y &lt;- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
+    as.matrix(data.frame(time = time, y = y, log_y = log(y)))
+  })
+}
+</code></pre>
+
+<p>The, at a first look circumstantial <code>as.matrix(data.frame(()))</code>
+construction is a simple way to create the required output format.
+Then it is of course a good idea to test the function beforehand,
+for example:</p>
+
+<pre><code class="r">time &lt;- 1:10
+out &lt;- grow_logistic_yshift(time, parms = list(y0 = 1, mumax = 0.5, K = 10, y_shift = 2))
+plot(time, out[, &quot;y&quot;], type = &quot;b&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAEgCAMAAACuMBnmAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAAsSAAALEgHS3X78AAAGL0lEQVR4nO2djXKcMAwG4f1fOpOEu+MSzvhPnyV7t9NkWiNj9lwhDDTbDhK20QNYBUSLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItoEb3BGUPRDbHzgWhLThMZ0YZs+8sCou3YTl8RbQiiRSDanOMkSI7uyZ8S+a1mpurox9usTVyYILqNVx6+ufhDdBtvJ7z7DWubzWLDgGgV5xx9t119s1lsCI4a7m5h7ti4qdks1j33C59/A5qazWJdUyz5J6ip2SzWLVWSfwKbms1ivfG4pq4/JkTnkFta3HRR32wW64vsYvm2j9pms1hfIFoEolWQo8056ozaou7UUVOzWawT2v2+umpq/tnkUw0fXnQ/y3sH0Z9PFMFFd9XcLjpx7zG06M6amdHXdNdMjr6g4xnw3GtT83VM3oOq7mhfOEr23tSc3DCY6A4XJXfd1zcnN4wlusdl9n3/tc3JPIHo//3XNr+2QHRW/7XNr03Ci46SozvHjsC2TkL0N4KhItqscv6zk6Zms1ghogur5UWrLmAXF61bJ1hbtHCIK4uWLnutK1q8urisaPUq7qKi9Yvli4k+vWmp3vNtc/b/7VHY9QiMF47udp1u3s5/6Nj1AKyXQu/3nWpGdMd91zabxdqAaBWuc7RV10MY9xBEhmij95AWY50ZPXg4q8zo4c9NLTKjh3teRLSDoeSJjn0JPn467wUzurwE9XB437jwXJA6tqCiYwwjvGgf03kvydEhF5XceJ686nAwhAfNor/n+nVBMvwo/Uznvf3KcDv9LuvaHFeem2f0hWgnLwu50jzljB7+EV8yX44euLifYrqqY+TtqhSIFoFoEdOJJkfLmLTqsImdj7lEO/5spxLt2HPZenTXrrvjMjU/KRBdehzi4/btuSh1uF74d+55mhzt3fMsor1rnkW0f88Zot8f7ejXdUcCeJ5BtPv0/EOGaOdvZcXwHD9HB/EcXnQUz9EvwaNozhW9ZWxa2nUP4niOKtrn4n6KHNGVz8MYqnB6uypFwYzu3HUDXm/ApghZdcwruip3IPpMzPJu2hyds2lp103MWXXkbVra9WIU5OjOXdcS9POLVnWESxkPMkV/ntHb/iljWigJ67n5EnzbP9YABk7CajYRbfYOS9zpvIea0aE9d8jRH2dvZy+hNcepOmJP5z2M6PCeg4gOrzmG6PjTeQ8hegrPAURPoTmC6ElwLDremnMKv6ID3kVJ4VZ0xPuCKRAtAtEi3IomR/fq+j6eqqNL11a7dYpH0VPN5Af+RE+p2aHoST17Ez2rZm+ip9XsS/S803n3JHpqzY5ET+7Zi+jZNXsRPb3m4aLnWs9IMVb0ZCt0KYaKnm3NOQWiRSBaBDlaxDDRx4+cp+rIak5uloxdRvCDVtGJF1YSsctp7jGj/+XZ25eFFtTcJXV8/yCWgtglNXfK0dfurv9yTc3qqmNZzVrRC2vWiN4eNXNDZ+ERiF7o8i+BveiVFjQSIFoEokWQo0UIq4618XEXfAEQLcJSNJyxE533acwdlx2G6LY4RIviEC2KQ7QoDtGiOESL4vyIhl8QLQLRIhAtAtEiEC0C0SIQLQLRIoxF366Hf46U7q8qruj2v63ohvvjVWG1+6uKO56Dy30gt7T7srFU76FuZrb88ymN3Z5RWZH2ObrSmHvRuzPRlRO6UrQ8R7sRXes5QI52Jbr2TFg5NZcV3dB7kBntpeqoTpr+6+jHsbmoo+EJokUgWgSiRSBaBKJFIFoEokUgWgSiRSBaBKJFIFoEokUgWgSiRSBaBKJFIFoEokUgWkRU0dvbtwDEGek74cYdbsC/PJ6pOL78fnN9LK4Hl+CUOrbjl++D8Ty2FP9F1z8UJcHz2FJczmjPeB/fJ7bzw5ykDkO25wnwUOw7c8QVHQ1Ei0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtAhEi0C0CESLQLQIRItAtIgvTNiOzCVSixgAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-4"/></p>
+
+<p>Future versions of the growthrates package may introduce additional
+checks, so it is already a good idea to convert the function into an
+appropriate object of class <code>growthmodel</code> with a so-called
+constructor function of the same name:</p>
+
+<pre><code>grow_logistic_yshift &lt;- growthmodel(grow_logistic_yshift,
+                                    c(&quot;y0&quot;, &quot;mumax&quot;, &quot;K&quot;, &quot;y_shift&quot;))
+</code></pre>
+
+<p>Now the new model is ready to be fitted to test data:</p>
+
+<pre><code class="r">x &lt;- seq(5, 100, 5)
+y &lt;- c(2.1, 2.3, 5, 4.7, 4.3, 6.9, 8.2, 11.5, 8.8, 10.2, 14.5, 12.5,
+       13.6, 12.7, 14.2, 12.5, 13.8, 15.1, 12.7, 14.9)
+
+fit &lt;- fit_growthmodel(grow_logistic_yshift,
+                       p = c(y0 = 1, mumax = 0.1, K = 10, K = 10, y_shift = 1),
+                       time = x, y = y)
+plot(fit)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-5"/></p>
+
+<pre><code class="r">summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Parameters:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## y0       0.86510    1.15526   0.749 0.464826    
+## mumax    0.08134    0.02737   2.972 0.008995 ** 
+## K       12.99885    2.56970   5.059 0.000116 ***
+## y_shift  1.04939    2.22481   0.472 0.643528    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.248 on 16 degrees of freedom
+## 
+## Parameter correlation:
+##              y0   mumax       K y_shift
+## y0       1.0000 -0.9632  0.9555 -0.9477
+## mumax   -0.9632  1.0000 -0.8989  0.8519
+## K        0.9555 -0.8989  1.0000 -0.9766
+## y_shift -0.9477  0.8519 -0.9766  1.0000
+</code></pre>
+
+<h1>4. Differential equation models in R</h1>
+
+<p>Differential equation models can be used quite similar to this. It is
+a little bit more complex because:</p>
+
+<ol>
+<li>we need two functions. One for the ODE model (the derivatives) and
+one for the numerical integration.</li>
+<li>the ODE model distinguishes between time dependent <em>state
+variables</em> and constant <em>parameters</em>, that can both be considered
+as <em>parameters</em> in a statistical sense. This distinction between
+<strong>statistical parameters</strong> (from the viewpoint of model fitting)
+and <strong>ODE model parameters</strong> should not be confused.</li>
+<li>the numerical integration is itself is a broad field that needs
+experience and care.  A short overview on this topic can be found
+in @Soetaert2010c.</li>
+</ol>
+
+<p>In the following, let&#39;s assume a model where the carrying capacity is
+a function of time.  This can be modelled with a system of two
+differential equations, one for the carrying capacity (\(K\)) and
+another for the population abundance (\(y\)).  For sake of simplicity we
+assume a linear increase of \(K\), but more complex models are of
+course also possible, e.g.  biochemical conversion of a mixed
+substrate, Monod-dependency from a limited resource, 
+density dependence or a semi-continuos addition of nutrients.</p>
+
+<p>The growth model is built from two parts:</p>
+
+<ol>
+<li>the function <code>ode_...</code> with the differential equations, and</li>
+<li>the growth model <code>grow_...</code> calculating the numerical solution.</li>
+</ol>
+
+<p>In the latter, the statistical parameters are splitted into the
+initial values for the states (<code>init</code>) and the ODE model parameters.
+And, we need to distinguish between the initial (start) values,
+e.g. \(y_0\) and the state variables \(y\) that change during simulation.</p>
+
+<pre><code class="r">ode_K_linear &lt;- function (time, init, parms, ...) {
+  with(as.list(c(parms, init)), {
+    dy &lt;- mumax * y * (1 - y/K)
+    dK &lt;- dK
+    list(c(dy, dK), log_y = unname(log(y)))
+  })
+}
+
+grow_K_linear &lt;- function(time, parms, ...) {
+  init    &lt;- parms[c(&quot;y0&quot;, &quot;K&quot;)]           # initial values
+  names(init) &lt;- c(&quot;y&quot;, &quot;K&quot;)               # force names of state variables
+  odeparms &lt;- parms[c(&quot;mumax&quot;, &quot;dK&quot;)]      # the parms of the ODE model
+  out &lt;- ode(init, time, ode_K_linear, parms = odeparms)
+  out
+}
+</code></pre>
+
+<p>Again, it&#39;s a good idea to test this first:</p>
+
+<pre><code class="r">grow_K_linear &lt;- growthmodel(grow_K_linear,
+                             pnames = c(&quot;y0&quot;, &quot;K&quot;, &quot;mumax&quot;, &quot;deltaK&quot;))
+head(grow_K_linear(time = 1:10, c(y0 = .1, K = 1, mumax = 0.1, dK = 0.5)))
+</code></pre>
+
+<pre><code>##      time         y   K     log_y
+## [1,]    1 0.1000000 1.0 -2.302585
+## [2,]    2 0.1095851 1.5 -2.211054
+## [3,]    3 0.1203149 2.0 -2.117643
+## [4,]    4 0.1322238 2.5 -2.023259
+## [5,]    5 0.1453939 3.0 -1.928308
+## [6,]    6 0.1599322 3.5 -1.833005
+</code></pre>
+
+<p>before we fit the model to data:</p>
+
+<pre><code class="r">x &lt;- seq(5, 100, 5)
+y &lt;- c(0.1, 2.2, 3.1, 1.5, 8.9, 8, 8.4, 9.8, 9.3, 10.6, 12, 13.6,
+  13.1, 13.3, 11.6, 14.7, 12.6, 13.9, 16.9, 14.4)
+fit &lt;- fit_growthmodel(grow_K_linear,
+                       p = c(y0 = 0.1, mumax = 0.2, K = 10, dK = .1), time = x, y = y)
+plot(fit)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAADYCAMAAAB8685yAAAACVBMVEUAAAAAAP////9d2MkjAAAACXBIWXMAAAsSAAALEgHS3X78AAAFJElEQVR4nO2ci7KjKhBFkf//6Lk3iqI27pZn49lrqpJTkZcr0BDUcZ484kY3wDoUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFAQoEeS+QUNBBXkH4fyt2RQU4aLX82cgS0l1M0FBAApCNIhBvyLlWD+hIH8/kwqCXCLhjILuUBCgyhCTE1LQL8EagCaKQXBx/D/Lf2zJQWl5LdAs0geR6O4HyyontL+WoFmG2ONZL+eOkwqu9/LUFefl7YksyC2Rm3OyKjFIHk+zCNqGVCJZcQ9yyYS9Bemi3umk134jSKsoKD2qOwsSz0aQtn20XCeqexeqGoMq582tbXt1Ub++N+MSb+SvuPYsVjlvbm37l+4un21c3Rx5U639oCDpLy+5OcbfQ/j6jCCp34S/3vebc6r8w83yZtV3ihrBlejmkuyx1KLDzfK+qUbcwtnULAsYO98XJA0UJ4+pe8Y/IEieqIR0woLIa9r4KUHpjqNdRaYqyD3cLO/LSlIT1TVVdgW5h5vlfVOLIuD8WUHrPKUNJIMEJTcPmwpyTjFRRcl9bnuKBaW/nIaCol0KJdk7wKWC3OX9Td4sotVfx1kg97Dv04P2rz+MqpkEdYhBawCJY85Ugu55Kl/2kX5x5gfdjNoLDj8mrCboJ2f9da7ZwamLFUHJE47DTr9+c1A8i9W57JM49WXvPPH+V1cqzWKFPUg+9T3ubP4NC3qKuslmFwq6/4YwLMjnjP8iQetiUDBkNwa5hoLiEPPrN4nF8oBbRowIOu24u+NaeXcfN/Qx6HVrsxaZ/jy6ZhHUouhUntB7RgQcAWuCjlXziIAjYEyQNHeNxZSg+N5AK1gSpN9B7QgFAewIerEF3xMzgmzqsSPIqh8rgsz6MSLIrp/yHUUffqm9z7tj2E8NQS6RUCvI6PS10UDQy8s+pvVUGmJyQp0g437qXNWQ06kEWfczehYz74eCEGMF2fczRNBxN0tB6b0YIChMerbXP4H+gsLliin0DBQ0iZ+egk63IMzip6Ogfb3tZgk/P7oJiq6UuvQzSvYYIGii7uPHCIo+NHYRTKB7DLr+BxDWDXWexfDz6tboug4SbnamoJ37wzkUdCA/usQY5EPkSczsf2IWe36Y5cHOHBQLSgcS93h0Fmpc1bgkjC/7UBB7EC4BxKC5/TSdxb5BO0EqiTWTVS2sbp3ZUFCd8imoSjIK6lkYBXWtMxsK+joUBKAgAAUBKAhAQQAKAlAQgIIADQW5+H4q2Aa0b6UrTJXM3V5h4hZse7FO1waQTFmYKllwqKjWtxek2LIOTzo8nlRUZGGdx3Fd654PF6JpgvN9BXlDghRnrhXkNP1si0HTCHJe96Wrz+ljPWifT57P6dc5/qIgF96szWLhmxs+i20X5aytg87tGrgO+ggUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCGBRkDu9DcZGK86YapOpxqyE61bby/o2rJ0GBcVDzG3/xjV0DkH4ycnWjTGF2IMGN8YU0e0wHGIibg/M4XYNBmmzUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCAP8A+XjbRrKv3MUAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-8"/></p>
+
+<pre><code class="r">summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Parameters:
+##       Estimate Std. Error t value Pr(&gt;|t|)    
+## y0     0.53286    0.55248   0.964 0.349157    
+## mumax  0.18124    0.07555   2.399 0.028988 *  
+## K      7.76895    1.65802   4.686 0.000248 ***
+## dK     0.08490    0.02375   3.575 0.002529 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.442 on 16 degrees of freedom
+## 
+## Parameter correlation:
+##            y0   mumax       K      dK
+## y0     1.0000 -0.9211  0.5040 -0.3791
+## mumax -0.9211  1.0000 -0.6911  0.5596
+## K      0.5040 -0.6911  1.0000 -0.9528
+## dK    -0.3791  0.5596 -0.9528  1.0000
+</code></pre>
+
+<h1>5. Inline C code with package cOde</h1>
+
+<p>A numerical simulation of ODE models can sometimes be slow, so we may
+be tempted to speed it up. This is indeed possible with <em>compiled
+code</em>, i.e. the model is written in another programming language
+(Fortran or C) that are faster compared to R. Several methods exist
+how this can be done, see for example @Soetaert2010c or @Kneis2016. In
+the following, we use a method that allows <em>inline code</em>, i.e.  direkt
+integration of C code in the R script using package <strong>cOde</strong>
+[@Kaschek2016].</p>
+
+<p>Note, however, that compiled code needs the necessary C (and/or
+Fortran) compilers and some additional developer tools.  These are
+often installed on Linux systems by default, whereas the Windows
+toolset available from
+<a href="https://cran.r-project.org/bin/windows/Rtools/">https://cran.r-project.org/bin/windows/Rtools/</a> needs an additional installation.</p>
+
+<pre><code class="r">## The following example shows how to use compiled growth models
+## from inline code, by using the &#39;cOde&#39; package of Daniel Kaschek
+## Note: This example needs the R development tools.
+##  - suitable compilers on Linux and Mac
+##  - Rtools on Windows from https://cran.r-project.org/bin/windows/Rtools/
+
+library(&quot;growthrates&quot;)
+library(&quot;cOde&quot;)
+
+## define a system of ODEs and compile it --------------------------------------
+ode_K_linear &lt;- funC(c(
+  y = &quot;mumax * y * (1-y/K)&quot;,
+  K = &quot;dK&quot;
+))
+
+yini &lt;- c(y = 1, K = 10)
+parms = c(mumax = 0.1, dK = 0.05)
+
+## run the model
+out1 &lt;- odeC(yini, times = 0:100, ode_K_linear, parms = parms)
+
+## generate artificial test data with normal distributed noise
+x &lt;- seq(5, 100, 5)
+y &lt;- odeC(yini, x, ode_K_linear, parms)[, &quot;y&quot;] + rnorm(x)
+
+
+## create a &quot;growthmodel&quot; with interfaces compatible to package growthrates
+## It is essential to use consistent names for parameters and initial values!
+
+grow_K_linear &lt;- function(time, parms, ...) {
+  init    &lt;- parms[c(&quot;y0&quot;, &quot;K&quot;)]  # initial values
+  names(init) &lt;- c(&quot;y&quot;, &quot;K&quot;)      # force names
+  out &lt;- odeC(init, time, ode_K_linear, parms)
+  cbind(out, log_y = log(out[, &quot;y&quot;]))
+}
+
+## convert this to an object, (maybe needed by future extensions)
+grow_K_linear &lt;- growthmodel(grow_K_linear, pnames = c(&quot;y0&quot;, &quot;mumax&quot;, &quot;K&quot;, &quot;dK&quot;))
+
+## Test the growthmodel
+## Columns with names &#39;time&#39;, &#39;y&#39; and &#39;log_y&#39; are mandatory.
+head(grow_K_linear(time = x, c(y0 = 1, mumax = 0.1, K = 10, dK = 0.1)))
+
+
+## Fit the model ---------------------------------------------------------------
+fit &lt;- fit_growthmodel(grow_K_linear,
+                       p = c(y0 = 1, mumax = 0.1, K = 10, dK = 0.1), time = x, y = y)
+plot(fit)
+summary(fit)
+
+## Unload DLL and cleanup ------------------------------------------------------
+## DLL creation should ideally be directed to a temporary directory.
+dll &lt;- paste(ode_K_linear, .Platform$dynlib.ext, sep = &quot;&quot;)
+dyn.unload(dll)
+unlink(dll)
+unlink(paste(ode_K_linear, &quot;.c&quot;, sep = &quot;&quot;))
+unlink(paste(ode_K_linear, &quot;.o&quot;, sep = &quot;&quot;))
+</code></pre>
+
+<h1>Acknowledgments</h1>
+
+<p>Many thanks to Claudia Seiler for the data set, to David Kneis for
+fruitful discussions, to Daniel Kaschek for his <strong>cOde</strong> package, and
+to the R Core Team [@RCore2015] for developing and maintaining
+<strong>R</strong>. This documentation was written using <strong>knitr</strong> [@knitr2014] and
+<strong>rmarkdown</strong> [@rmarkdown].</p>
+
+<h1>References</h1>
+
+</body>
+
+</html>

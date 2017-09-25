@@ -15,12 +15,12 @@
 #' @param quota part of window fits considered for the overall linear fit
 #'   (relative to max. growth rate).
 #' @param subset a specification of the rows to be used: defaults to all rows.
-#' @param \dots reserved for future extensions.
+#' @param \dots generic parameters, reserved for future extensions.
 #'
 #' @return object with parameters of all fits.
 #'
-#' @references Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.
-#'   Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
+#' @references Hall, BG., Acar, H, Nandipati, A and Barlow, M (2014) Growth Rates Made Easy. 
+#' Mol. Biol. Evol. 31: 232-38, doi:10.1093/molbev/mst187
 #'
 #' @family fitting functions
 #'

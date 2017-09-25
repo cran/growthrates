@@ -19,7 +19,7 @@ head(bactgrowth)
 ## ---- fig.width=10, fig.height=14----------------------------------------
 library(lattice)
 data(bactgrowth)
-xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth, 
+xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth,
        groups = replicate, pch = 16, cex = 0.5)
 
 ## ------------------------------------------------------------------------
