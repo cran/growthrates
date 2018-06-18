@@ -12,7 +12,7 @@
 
 <meta name="author" content="Thomas Petzoldt" />
 
-<meta name="date" content="2017-10-22" />
+<meta name="date" content="2018-06-18" />
 
 <title>Estimation of Growth Rates with Package growthrates, Part 2: User-defined Growth Models</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Estimation of Growth Rates with Package <code>growthrates</code>, Part 2: User-defined Growth Models</h1>
 <h4 class="author"><em>Thomas Petzoldt</em></h4>
-<h4 class="date"><em>2017-10-22</em></h4>
+<h4 class="date"><em>2018-06-18</em></h4>
 
 
 
@@ -91,7 +91,7 @@ LANG=en_US.UTF-8
 </div>
 <div id="differential-equations-or-closed-form" class="section level1">
 <h1>2. Differential equations or closed form?</h1>
-<p>Growth models can be either ``ordinary functions’’ of time <span class="math inline">\(f(t)\)</span> in <em>closed form</em>, that a allow to get values for the dependend variable <span class="math inline">\(y\)</span> immediately from any given value of an independent variable <span class="math inline">\(t\)</span> (or <span class="math inline">\(time\)</span>) without the need of iteration. Or, they can be a differential equation model <span class="math inline">\(dy/dt\)</span> that needs numerical integration.</p>
+<p>Growth models can be either “ordinary functions” of time <span class="math inline">\(f(t)\)</span> in <em>closed form</em>, that a allow to get values for the dependend variable <span class="math inline">\(y\)</span> immediately from any given value of an independent variable <span class="math inline">\(t\)</span> (or <span class="math inline">\(time\)</span>) without the need of iteration. Or, they can be a differential equation model <span class="math inline">\(dy/dt\)</span> that needs numerical integration.</p>
 <p>Sometimes, a model can be given in either of these forms. As an example, the logistic growth model can be written as a differential equation:</p>
 <p><span class="math display">\[\frac{dy}{dt} = \mu_{max} \cdot y \left(1 - \frac{y}{K}\right)\]</span></p>
 <p>or as its analytical solution in closed form:</p>
@@ -112,14 +112,15 @@ LANG=en_US.UTF-8
 <li>its return value (output) must be a matrix with at least 3 columns with the column names <code>time</code>, <code>y</code> and <code>log_y</code>.</li>
 </ol>
 <p>The inner part of the function can be adapted as necessary, as long as the connection between input and output makes sense from a scientific viewpoint.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grow_logistic_yshift &lt;-<span class="st"> </span>function(time, parms) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grow_logistic_yshift &lt;-<span class="st"> </span><span class="cf">function</span>(time, parms) {
   <span class="kw">with</span>(<span class="kw">as.list</span>(parms), {
-    y &lt;-<span class="st"> </span>(K *<span class="st"> </span>y0) /<span class="st"> </span>(y0 +<span class="st"> </span>(K -<span class="st"> </span>y0) *<span class="st"> </span><span class="kw">exp</span>(-mumax *<span class="st"> </span>time)) +<span class="st"> </span>y_shift
+    y &lt;-<span class="st"> </span>(K <span class="op">*</span><span class="st"> </span>y0) <span class="op">/</span><span class="st"> </span>(y0 <span class="op">+</span><span class="st"> </span>(K <span class="op">-</span><span class="st"> </span>y0) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>mumax <span class="op">*</span><span class="st"> </span>time)) <span class="op">+</span><span class="st"> </span>y_shift
     <span class="kw">as.matrix</span>(<span class="kw">data.frame</span>(<span class="dt">time =</span> time, <span class="dt">y =</span> y, <span class="dt">log_y =</span> <span class="kw">log</span>(y)))
   })
 }</code></pre></div>
-<p>The, at a first look circumstantial <code>as.matrix(data.frame(()))</code> construction is a simple way to create the required output format. Then it is of course a good idea to test the function beforehand, for example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">time &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+<p>The, at a first look, circumstantial <code>as.matrix(data.frame(()))</code> construction is just a simple way to create the required output format.</p>
+<p>Then it is of course wise to test the function beforehand, for example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">time &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
 out &lt;-<span class="st"> </span><span class="kw">grow_logistic_yshift</span>(time, <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">y0 =</span> <span class="dv">1</span>, <span class="dt">mumax =</span> <span class="fl">0.5</span>, <span class="dt">K =</span> <span class="dv">10</span>, <span class="dt">y_shift =</span> <span class="dv">2</span>))
 <span class="kw">plot</span>(time, out[, <span class="st">&quot;y&quot;</span>], <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
@@ -162,7 +163,7 @@ fit &lt;-<span class="st"> </span><span class="kw">fit_growthmodel</span>(grow_l
 <ol style="list-style-type: decimal">
 <li>we need two functions. One for the ODE model (the derivatives) and one for the numerical integration.</li>
 <li>the ODE model distinguishes between time dependent <em>state variables</em> and constant <em>parameters</em>, that can both be considered as <em>parameters</em> in a statistical sense. This distinction between <strong>statistical parameters</strong> (from the viewpoint of model fitting) and <strong>ODE model parameters</strong> should not be confused.</li>
-<li>the numerical integration is itself is a broad field that needs experience and care. A short overview on this topic can be found in <span class="citation">Soetaert, Petzoldt, and Setzer (2010)</span>.</li>
+<li>the numerical integration itself is a broad field that needs experience and care. A short overview on this topic can be found in <span class="citation">Soetaert, Petzoldt, and Setzer (2010)</span>.</li>
 </ol>
 <p>In the following, let’s assume a model where the carrying capacity is a function of time. This can be modelled with a system of two differential equations, one for the carrying capacity (<span class="math inline">\(K\)</span>) and another for the population abundance (<span class="math inline">\(y\)</span>). For sake of simplicity we assume a linear increase of <span class="math inline">\(K\)</span>, but more complex models are of course also possible, e.g. biochemical conversion of a mixed substrate, Monod-dependency from a limited resource, density dependence or a semi-continuos addition of nutrients.</p>
 <p>The growth model is built from two parts:</p>
@@ -171,15 +172,15 @@ fit &lt;-<span class="st"> </span><span class="kw">fit_growthmodel</span>(grow_l
 <li>the growth model <code>grow_...</code> calculating the numerical solution.</li>
 </ol>
 <p>In the latter, the statistical parameters are splitted into the initial values for the states (<code>init</code>) and the ODE model parameters. And, we need to distinguish between the initial (start) values, e.g. <span class="math inline">\(y_0\)</span> and the state variables <span class="math inline">\(y\)</span> that change during simulation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ode_K_linear &lt;-<span class="st"> </span>function (time, init, parms, ...) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ode_K_linear &lt;-<span class="st"> </span><span class="cf">function</span> (time, init, parms, ...) {
   <span class="kw">with</span>(<span class="kw">as.list</span>(<span class="kw">c</span>(parms, init)), {
-    dy &lt;-<span class="st"> </span>mumax *<span class="st"> </span>y *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span>y/K)
+    dy &lt;-<span class="st"> </span>mumax <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>y<span class="op">/</span>K)
     dK &lt;-<span class="st"> </span>dK
     <span class="kw">list</span>(<span class="kw">c</span>(dy, dK), <span class="dt">log_y =</span> <span class="kw">unname</span>(<span class="kw">log</span>(y)))
   })
 }
 
-grow_K_linear &lt;-<span class="st"> </span>function(time, parms, ...) {
+grow_K_linear &lt;-<span class="st"> </span><span class="cf">function</span>(time, parms, ...) {
   init    &lt;-<span class="st"> </span>parms[<span class="kw">c</span>(<span class="st">&quot;y0&quot;</span>, <span class="st">&quot;K&quot;</span>)]           <span class="co"># initial values</span>
   <span class="kw">names</span>(init) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;y&quot;</span>, <span class="st">&quot;K&quot;</span>)               <span class="co"># force names of state variables</span>
   odeparms &lt;-<span class="st"> </span>parms[<span class="kw">c</span>(<span class="st">&quot;mumax&quot;</span>, <span class="st">&quot;dK&quot;</span>)]      <span class="co"># the parms of the ODE model</span>
@@ -189,7 +190,7 @@ grow_K_linear &lt;-<span class="st"> </span>function(time, parms, ...) {
 <p>Again, it’s a good idea to test this first:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grow_K_linear &lt;-<span class="st"> </span><span class="kw">growthmodel</span>(grow_K_linear,
                              <span class="dt">pnames =</span> <span class="kw">c</span>(<span class="st">&quot;y0&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;mumax&quot;</span>, <span class="st">&quot;deltaK&quot;</span>))
-<span class="kw">head</span>(<span class="kw">grow_K_linear</span>(<span class="dt">time =</span> <span class="dv">1</span>:<span class="dv">10</span>, <span class="kw">c</span>(<span class="dt">y0 =</span> .<span class="dv">1</span>, <span class="dt">K =</span> <span class="dv">1</span>, <span class="dt">mumax =</span> <span class="fl">0.1</span>, <span class="dt">dK =</span> <span class="fl">0.5</span>)))</code></pre></div>
+<span class="kw">head</span>(<span class="kw">grow_K_linear</span>(<span class="dt">time =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="kw">c</span>(<span class="dt">y0 =</span> .<span class="dv">1</span>, <span class="dt">K =</span> <span class="dv">1</span>, <span class="dt">mumax =</span> <span class="fl">0.1</span>, <span class="dt">dK =</span> <span class="fl">0.5</span>)))</code></pre></div>
 <pre><code>##      time         y   K     log_y
 ## [1,]    1 0.1000000 1.0 -2.302585
 ## [2,]    2 0.1095851 1.5 -2.211054
@@ -248,17 +249,17 @@ yini &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">y 
 parms =<span class="st"> </span><span class="kw">c</span>(<span class="dt">mumax =</span> <span class="fl">0.1</span>, <span class="dt">dK =</span> <span class="fl">0.05</span>)
 
 ## run the model
-out1 &lt;-<span class="st"> </span><span class="kw">odeC</span>(yini, <span class="dt">times =</span> <span class="dv">0</span>:<span class="dv">100</span>, ode_K_linear, <span class="dt">parms =</span> parms)
+out1 &lt;-<span class="st"> </span><span class="kw">odeC</span>(yini, <span class="dt">times =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, ode_K_linear, <span class="dt">parms =</span> parms)
 
 ## generate artificial test data with normal distributed noise
 x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">5</span>, <span class="dv">100</span>, <span class="dv">5</span>)
-y &lt;-<span class="st"> </span><span class="kw">odeC</span>(yini, x, ode_K_linear, parms)[, <span class="st">&quot;y&quot;</span>] +<span class="st"> </span><span class="kw">rnorm</span>(x)
+y &lt;-<span class="st"> </span><span class="kw">odeC</span>(yini, x, ode_K_linear, parms)[, <span class="st">&quot;y&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(x)
 
 
 ## create a &quot;growthmodel&quot; with interfaces compatible to package growthrates
 ## It is essential to use consistent names for parameters and initial values!
 
-grow_K_linear &lt;-<span class="st"> </span>function(time, parms, ...) {
+grow_K_linear &lt;-<span class="st"> </span><span class="cf">function</span>(time, parms, ...) {
   init    &lt;-<span class="st"> </span>parms[<span class="kw">c</span>(<span class="st">&quot;y0&quot;</span>, <span class="st">&quot;K&quot;</span>)]  <span class="co"># initial values</span>
   <span class="kw">names</span>(init) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;y&quot;</span>, <span class="st">&quot;K&quot;</span>)      <span class="co"># force names</span>
   out &lt;-<span class="st"> </span><span class="kw">odeC</span>(init, time, ode_K_linear, parms)
@@ -281,7 +282,7 @@ fit &lt;-<span class="st"> </span><span class="kw">fit_growthmodel</span>(grow_K
 
 ## Unload DLL and cleanup ------------------------------------------------------
 ## DLL creation should ideally be directed to a temporary directory.
-dll &lt;-<span class="st"> </span><span class="kw">paste</span>(ode_K_linear, .Platform$dynlib.ext, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+dll &lt;-<span class="st"> </span><span class="kw">paste</span>(ode_K_linear, .Platform<span class="op">$</span>dynlib.ext, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
 <span class="kw">dyn.unload</span>(dll)
 <span class="kw">unlink</span>(dll)
 <span class="kw">unlink</span>(<span class="kw">paste</span>(ode_K_linear, <span class="st">&quot;.c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))
