@@ -20,8 +20,7 @@ grow_richards(time, parms)
 }}
 }
 \value{
-vector of dependent variable (\code{y}) and its log-transformed
-  values (\code{log_y}).
+vector of dependent variable (\code{y}).
 }
 \description{
 Richards growth model written as analytical solution of the differential equation.
@@ -56,7 +55,9 @@ Res. Lett. Inf. Math. Sci, (2001) 2, 23--46.
 \seealso{
 Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_exponential}},
+  \code{\link{grow_gompertz2}},
   \code{\link{grow_gompertz}}, \code{\link{grow_huang}},
   \code{\link{grow_logistic}}, \code{\link{growthmodel}},
   \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}}
 }
+\concept{growth models}

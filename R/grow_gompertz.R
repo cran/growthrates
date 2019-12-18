@@ -15,6 +15,11 @@
 #'
 #' }
 #'
+#' @note The naming of parameter "mumax" was done in analogy to the other growth
+#'   models, but it turned out that it was not consistent with the maximum
+#'   growth rate of the population. This can be considered as bug. The function
+#'   will be removed or replaced in future versions of the package. Please use
+#'   \code{grow_gompertz2} instead.
 #'
 #' @references Tsoularis, A. (2001) Analysis of Logistic Growth Models.
 #'   Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
@@ -36,7 +41,7 @@
 grow_gompertz <- function(time, parms) {
   with(as.list(parms), {
     y <- K * exp(log(y0 / K) * exp(-mumax * time))
-    return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
+    return(as.matrix(data.frame(time = time, y = y)))
   })
 }
 ## attach names of parameters as attributes

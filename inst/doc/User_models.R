@@ -1,28 +1,28 @@
-## ----opts, echo = FALSE, message = FALSE---------------------------------
+## ----opts, echo = FALSE, message = FALSE--------------------------------------
 library("knitr")
 #knitr::opts_chunk$set(eval = FALSE)
 
-## ----eval=TRUE, echo=FALSE, results="hide"-------------------------------
+## ----eval=TRUE, echo=FALSE, results="hide"------------------------------------
 suppressMessages(require("growthrates"))
 #require("growthrates")
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library("growthrates")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 grow_logistic_yshift <- function(time, parms) {
   with(as.list(parms), {
     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
-    as.matrix(data.frame(time = time, y = y, log_y = log(y)))
+    as.matrix(data.frame(time = time, y = y))
   })
 }
 
-## ---- fig.width=5, fig.height=4------------------------------------------
+## ---- fig.width=5, fig.height=4-----------------------------------------------
 time <- 1:10
 out <- grow_logistic_yshift(time, parms = list(y0 = 1, mumax = 0.5, K = 10, y_shift = 2))
 plot(time, out[, "y"], type = "b")
 
-## ---- fig.width=5, fig.height=4------------------------------------------
+## ---- fig.width=5, fig.height=4-----------------------------------------------
 x <- seq(5, 100, 5)
 y <- c(2.1, 2.3, 5, 4.7, 4.3, 6.9, 8.2, 11.5, 8.8, 10.2, 14.5, 12.5,
        13.6, 12.7, 14.2, 12.5, 13.8, 15.1, 12.7, 14.9)
@@ -33,12 +33,12 @@ fit <- fit_growthmodel(grow_logistic_yshift,
 plot(fit)
 summary(fit)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ode_K_linear <- function (time, init, parms, ...) {
   with(as.list(c(parms, init)), {
     dy <- mumax * y * (1 - y/K)
     dK <- dK
-    list(c(dy, dK), log_y = unname(log(y)))
+    list(c(dy, dK))
   })
 }
 
@@ -50,12 +50,12 @@ grow_K_linear <- function(time, parms, ...) {
   out
 }
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 grow_K_linear <- growthmodel(grow_K_linear,
                              pnames = c("y0", "K", "mumax", "deltaK"))
 head(grow_K_linear(time = 1:10, c(y0 = .1, K = 1, mumax = 0.1, dK = 0.5)))
 
-## ---- fig.width=4, fig.height=3------------------------------------------
+## ---- fig.width=4, fig.height=3-----------------------------------------------
 x <- seq(5, 100, 5)
 y <- c(0.1, 2.2, 3.1, 1.5, 8.9, 8, 8.4, 9.8, 9.3, 10.6, 12, 13.6,
   13.1, 13.3, 11.6, 14.7, 12.6, 13.9, 16.9, 14.4)
@@ -64,7 +64,7 @@ fit <- fit_growthmodel(grow_K_linear,
 plot(fit)
 summary(fit)
 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------
 #  ## The following example shows how to use compiled growth models
 #  ## from inline code, by using the 'cOde' package of Daniel Kaschek
 #  ## Note: This example needs the R development tools.
@@ -98,14 +98,14 @@ summary(fit)
 #    init    <- parms[c("y0", "K")]  # initial values
 #    names(init) <- c("y", "K")      # force names
 #    out <- odeC(init, time, ode_K_linear, parms)
-#    cbind(out, log_y = log(out[, "y"]))
+#    out
 #  }
 #  
 #  ## convert this to an object, (maybe needed by future extensions)
 #  grow_K_linear <- growthmodel(grow_K_linear, pnames = c("y0", "mumax", "K", "dK"))
 #  
 #  ## Test the growthmodel
-#  ## Columns with names 'time', 'y' and 'log_y' are mandatory.
+#  ## Columns with names 'time' and 'y' are mandatory.
 #  head(grow_K_linear(time = x, c(y0 = 1, mumax = 0.1, K = 10, dK = 0.1)))
 #  
 #  

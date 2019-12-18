@@ -1,53 +1,53 @@
-## ----opts, echo = FALSE, message = FALSE---------------------------------
+## ----opts, echo = FALSE, message = FALSE--------------------------------------
 library("knitr")
 #knitr::opts_chunk$set(eval = FALSE)
 
-## ----eval=TRUE, echo=FALSE, results="hide"-------------------------------
+## ----eval=TRUE, echo=FALSE, results="hide"------------------------------------
 suppressMessages(require("growthrates"))
 #require("growthrates")
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library("growthrates")
 
-## ----eval=TRUE-----------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 data(bactgrowth)
 str(bactgrowth)
 
-## ----eval=TRUE-----------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 head(bactgrowth)
 
-## ---- fig.width=10, fig.height=14----------------------------------------
+## ---- fig.width=10, fig.height=14---------------------------------------------
 library(lattice)
 data(bactgrowth)
 xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth,
        groups = replicate, pch = 16, cex = 0.5)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 dat <- splitted.data[[1]]
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 fit <- fit_easylinear(dat$time, dat$value)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 summary(fit)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 coef(fit)      # exponential growth parameters
 rsquared(fit)  # coefficient of determination (of log-transformed data)
 deviance(fit)  # residual sum of squares of log-transformed data
 
-## ---- fig.width=7--------------------------------------------------------
+## ---- fig.width=7-------------------------------------------------------------
 par(mfrow = c(1, 2))
 plot(fit, log = "y")
 plot(fit)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 fitx <- fit_easylinear(dat$time, dat$value, h = 8, quota = 0.95)
 plot(fit)
 lines(fitx, pch = "+", col = "blue")
 
-## ---- fig.width=7--------------------------------------------------------
+## ---- fig.width=7-------------------------------------------------------------
 p     <- c(y0 = 0.01, mumax = 0.2, K = 0.1)
 lower <- c(y0 = 1e-6, mumax = 0,   K = 0)
 upper <- c(y0 = 0.05, mumax = 5,   K = 0.5)
@@ -72,7 +72,7 @@ lines(fit2, col = "red")
 plot(fit1, log = "y")
 lines(fit2, col = "red")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 fit3 <- fit_growthmodel(FUN = grow_twostep, p = p, time = dat$time, y = dat$value,
                         lower = lower, upper = upper, which = c("kw", "mumax", "K"))
 
@@ -81,7 +81,7 @@ summary(fit3)
 coef(fit3)
 plot(fit3)
 
-## ---- fig.width=7--------------------------------------------------------
+## ---- fig.width=7-------------------------------------------------------------
 
 dat <- splitted.data[[2]]
 time <- dat$time
@@ -96,7 +96,7 @@ plot(res)
 coef(res)
 
 
-## ----fig.width=14, fig.height=20-----------------------------------------
+## ----fig.width=14, fig.height=20----------------------------------------------
 many_spline_fits <- all_splines(value ~ time | strain + conc + replicate,
                                 data = bactgrowth, spar = 0.5)
 
@@ -104,7 +104,7 @@ par(mfrow = c(12, 6))
 par(mar = c(2.5, 4, 2, 1))
 plot(many_spline_fits)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ## initial parameters and box constraints
 p   <- c(y0 = 0.03, mumax = .1, K = 0.1, h0 = 1)
 
@@ -118,7 +118,7 @@ many_baranyi1 <- all_growthmodels(
                    p = p, lower = lower, upper = upper,
                    log = "y", ncores = 2)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ## use coefficients of first fit as new initial parameters
 pp   <- coef(many_baranyi1)
 ## but set h0 to a fixed value
@@ -130,12 +130,12 @@ many_baranyi2 <- all_growthmodels(
                    p = pp, lower = lower, upper = upper,
                    which = c("y0", "mumax", "K"), log = "y", ncores = 2)
 
-## ----fig.width=14, fig.height=20-----------------------------------------
+## ----fig.width=14, fig.height=20----------------------------------------------
 par(mfrow = c(12, 6))
 par(mar = c(2.5, 4, 2, 1))
 plot(many_baranyi2)
 
-## ---- fig.width=7, fig.height=3------------------------------------------
+## ---- fig.width=7, fig.height=3-----------------------------------------------
 many_spline_res   <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
 xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
