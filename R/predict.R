@@ -69,9 +69,6 @@
 #'
 #' plot(fit2, xlim=c(0, 50))
 #' lines(pr[, c("time", "y")], lty="dashed", col="red")
-
-
-#' @rdname predict
 #' @exportMethod predict
 #'
 setMethod("predict", "growthrates_fit",
@@ -120,7 +117,7 @@ setMethod("predict", "easylinear_fit",
             type <- match.arg(type)
 
             if (is.null(newdata)){
-              newdata <- list(time =object@obs$time)
+              newdata <- list(time = object@obs$time)
             }
 
             x <- newdata$time
@@ -158,7 +155,7 @@ setMethod("predict", "nonlinear_fit",
 
             ## todo: check type of return parameters for consistency with
             ##       other functions, especially "residuals"
-            ## now it returns a table with time, y
+            ## now it returns a data frame with time, y
             y
           }
 )

@@ -116,7 +116,7 @@ many_baranyi1 <- all_growthmodels(
                    value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                    data = bactgrowth,
                    p = p, lower = lower, upper = upper,
-                   log = "y", ncores = 2)
+                   transform = "log", ncores = 2)
 
 ## -----------------------------------------------------------------------------
 ## use coefficients of first fit as new initial parameters
@@ -128,7 +128,7 @@ many_baranyi2 <- all_growthmodels(
                    value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                    data = bactgrowth,
                    p = pp, lower = lower, upper = upper,
-                   which = c("y0", "mumax", "K"), log = "y", ncores = 2)
+                   which = c("y0", "mumax", "K"), transform = "log", ncores = 2)
 
 ## ----fig.width=14, fig.height=20----------------------------------------------
 par(mfrow = c(12, 6))
