@@ -1,6 +1,8 @@
 ## ----opts, echo = FALSE, message = FALSE--------------------------------------
 library("knitr")
-#knitr::opts_chunk$set(eval = FALSE)
+library("lattice")
+library("ggplot2")
+library("dplyr")
 
 ## ----eval=TRUE, echo=FALSE, results="hide"------------------------------------
 suppressMessages(require("growthrates"))
@@ -16,11 +18,20 @@ str(bactgrowth)
 ## ----eval=TRUE----------------------------------------------------------------
 head(bactgrowth)
 
-## ---- fig.width=10, fig.height=14---------------------------------------------
-library(lattice)
-data(bactgrowth)
-xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth,
-       groups = replicate, pch = 16, cex = 0.5)
+## ---- fig.width=9, fig.height=4-----------------------------------------------
+library(ggplot2)
+library(dplyr)
+bactgrowth %>% 
+  mutate(replicate=factor(replicate)) %>%
+  ggplot(aes(time, value)) + 
+  geom_point(aes(color=replicate)) + 
+  facet_grid(strain ~ conc)
+
+## ----eval=FALSE---------------------------------------------------------------
+#  library(lattice)
+#  data(bactgrowth)
+#  xyplot(value ~ time|strain + as.factor(conc), data = bactgrowth,
+#         groups = replicate, pch = 16, cex = 0.5)
 
 ## -----------------------------------------------------------------------------
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
@@ -96,7 +107,7 @@ plot(res)
 coef(res)
 
 
-## ----fig.width=14, fig.height=20----------------------------------------------
+## ----fig.width=10, fig.height=20----------------------------------------------
 many_spline_fits <- all_splines(value ~ time | strain + conc + replicate,
                                 data = bactgrowth, spar = 0.5)
 
@@ -130,7 +141,7 @@ many_baranyi2 <- all_growthmodels(
                    p = pp, lower = lower, upper = upper,
                    which = c("y0", "mumax", "K"), transform = "log", ncores = 2)
 
-## ----fig.width=14, fig.height=20----------------------------------------------
+## ----fig.width=10, fig.height=20----------------------------------------------
 par(mfrow = c(12, 6))
 par(mar = c(2.5, 4, 2, 1))
 plot(many_baranyi2)
@@ -138,6 +149,22 @@ plot(many_baranyi2)
 ## ---- fig.width=7, fig.height=3-----------------------------------------------
 many_spline_res   <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
-xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
-xyplot(mumax ~ log(conc+1)|strain, data = many_baranyi2_res, layout = c(3, 1))
+
+## ---- fig.width=7, fig.height=3-----------------------------------------------
+many_spline_res %>%
+  ggplot(aes(log(conc + 1), mumax)) + 
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~ strain)
+
+## ---- fig.width=7, fig.height=3-----------------------------------------------
+many_baranyi2_res %>%
+  ggplot(aes(log(conc + 1), mumax)) + 
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~ strain)
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
+#  xyplot(mumax ~ log(conc+1)|strain, data = many_baranyi2_res, layout = c(3, 1))
 

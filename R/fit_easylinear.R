@@ -60,9 +60,11 @@
 #' @rdname fit_easylinear
 #' @export fit_easylinear
 #'
-fit_easylinear <- function(time, y, h=5, quota=0.95) {
+fit_easylinear <- function(time, y, h = 5, quota = 0.95) {
 
   if (any(duplicated(time))) stop("time variable must not contain duplicated values")
+  if (any(y <= 0))           stop("dependent variable y must be positive")
+  if ((h < 2) | (h > length(time)-1))  stop("h must be > 1 and < N")
 
   obs <- data.frame(time, y)
   obs$ylog <- log(obs$y)
@@ -84,16 +86,26 @@ fit_easylinear <- function(time, y, h=5, quota=0.95) {
     tp <- seq(min(candidates), max(candidates) + h-1)
     m <- lm_window(obs$time, obs$ylog, min(tp), length(tp))
     p  <- c(lm_parms(m), n=length(tp))
-  } else {
-    p <- c(a=0, b=0, se=0, r2=0, cv=0, n=0)
-  }
-  ## estimate lag phase
-  ## todo: determine y0_data as average or median from multipe values
-  y0_lm    <- unname(exp(coef(m)[1]))
-  y0_data  <- y[1]
-  mumax <- unname(coef(m)[2])
 
-  lag <- (log(y0_data) - log(y0_lm)) / mumax
+    ## estimate lag phase
+    ## todo: determine y0_data as average or median from multipe values
+    y0_data  <- y[1]
+    y0_lm    <- unname(exp(coef(m)[1]))
+    mumax    <- unname(coef(m)[2])
+
+    lag <- (log(y0_data) - log(y0_lm)) / mumax
+
+  } else {
+    warning(paste("no positively growing segment of length h >=", h, " found"))
+    ## set crude defaults, check this
+    y0_data  <- y[1]
+    y0_lm    <- mean(y) # check this
+    mumax    <- NA
+    lag      <- NA
+    tp       <- 1:length(y)
+    m        <- NULL
+    p        <- c(a=y0_lm, b=NA, se=NA, r2=NA, cv=NA, n=NA)
+  }
 
   obj <- new("easylinear_fit",
              FUN = grow_exponential, fit = m,
