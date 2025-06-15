@@ -9,7 +9,7 @@ suppressMessages(require("growthrates"))
 #require("growthrates")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  library("growthrates")
+# library("growthrates")
 
 ## ----eval=TRUE----------------------------------------------------------------
 data(bactgrowth)
@@ -18,7 +18,7 @@ str(bactgrowth)
 ## ----eval=TRUE----------------------------------------------------------------
 head(bactgrowth)
 
-## ---- fig.width=9, fig.height=4-----------------------------------------------
+## ----fig.width=9, fig.height=4------------------------------------------------
 library(ggplot2)
 library(dplyr)
 bactgrowth %>% 
@@ -28,10 +28,10 @@ bactgrowth %>%
   facet_grid(strain ~ conc)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  library(lattice)
-#  data(bactgrowth)
-#  xyplot(value ~ time|strain + as.factor(conc), data = bactgrowth,
-#         groups = replicate, pch = 16, cex = 0.5)
+# library(lattice)
+# data(bactgrowth)
+# xyplot(value ~ time|strain + as.factor(conc), data = bactgrowth,
+#        groups = replicate, pch = 16, cex = 0.5)
 
 ## -----------------------------------------------------------------------------
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
@@ -48,7 +48,7 @@ coef(fit)      # exponential growth parameters
 rsquared(fit)  # coefficient of determination (of log-transformed data)
 deviance(fit)  # residual sum of squares of log-transformed data
 
-## ---- fig.width=7-------------------------------------------------------------
+## ----fig.width=7--------------------------------------------------------------
 par(mfrow = c(1, 2))
 plot(fit, log = "y")
 plot(fit)
@@ -58,7 +58,7 @@ fitx <- fit_easylinear(dat$time, dat$value, h = 8, quota = 0.95)
 plot(fit)
 lines(fitx, pch = "+", col = "blue")
 
-## ---- fig.width=7-------------------------------------------------------------
+## ----fig.width=7--------------------------------------------------------------
 p     <- c(y0 = 0.01, mumax = 0.2, K = 0.1)
 lower <- c(y0 = 1e-6, mumax = 0,   K = 0)
 upper <- c(y0 = 0.05, mumax = 5,   K = 0.5)
@@ -92,7 +92,7 @@ summary(fit3)
 coef(fit3)
 plot(fit3)
 
-## ---- fig.width=7-------------------------------------------------------------
+## ----fig.width=7--------------------------------------------------------------
 
 dat <- splitted.data[[2]]
 time <- dat$time
@@ -146,25 +146,25 @@ par(mfrow = c(12, 6))
 par(mar = c(2.5, 4, 2, 1))
 plot(many_baranyi2)
 
-## ---- fig.width=7, fig.height=3-----------------------------------------------
+## ----fig.width=7, fig.height=3------------------------------------------------
 many_spline_res   <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
 
-## ---- fig.width=7, fig.height=3-----------------------------------------------
+## ----fig.width=7, fig.height=3------------------------------------------------
 many_spline_res %>%
   ggplot(aes(log(conc + 1), mumax)) + 
   geom_point() +
   geom_smooth() +
   facet_wrap(~ strain)
 
-## ---- fig.width=7, fig.height=3-----------------------------------------------
+## ----fig.width=7, fig.height=3------------------------------------------------
 many_baranyi2_res %>%
   ggplot(aes(log(conc + 1), mumax)) + 
   geom_point() +
   geom_smooth() +
   facet_wrap(~ strain)
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
-#  xyplot(mumax ~ log(conc+1)|strain, data = many_baranyi2_res, layout = c(3, 1))
+## ----eval=FALSE---------------------------------------------------------------
+# xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
+# xyplot(mumax ~ log(conc+1)|strain, data = many_baranyi2_res, layout = c(3, 1))
 
